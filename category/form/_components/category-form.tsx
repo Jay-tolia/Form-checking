@@ -88,7 +88,47 @@ export function CategoryForm({ searchParams }: CategoryFormProps) {
                           </FormElement.Item>
                         )}
                       />
-
+                      <FormElement.Field
+                                    name="image"
+                                    render={({ field }) => (
+                                      <FormElement.Item required>
+                                        <FormElement.Label htmlFor="input-avatar">
+                                          Image
+                                        </FormElement.Label>
+                                        <FormElement.Control>
+                                          <FormInput
+                                            type="file"
+                                            value={field.value}
+                                            onFileChange={field.onChange}
+                                            id="input-Image"
+                                          />
+                                        </FormElement.Control>
+                                      </FormElement.Item>
+                                    )}
+                                  />
+<FormElement.Field
+          name="display-order"
+          render={({ field }) => (
+            <FormElement.Item required>
+              <FormElement.Label htmlFor="input-display-order">
+                Display order
+              </FormElement.Label>
+              <FormElement.Control>
+                <FormInput
+                  {...field}
+                  value={field.value ?? ""}
+                  id="input-display-order"
+                    onChange={field.onChange}
+                  type="number"
+                  placeholder="0."
+                  autoComplete="off"
+                 
+                />
+              </FormElement.Control>
+              
+            </FormElement.Item>
+          )}
+        />
         {/* Is Active */}
         <FormElement.Field
                         name={`isActive`}

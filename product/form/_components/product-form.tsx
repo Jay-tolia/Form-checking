@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 
 import FormElement from "@/components/elements/form-elements";
-import { FormInput, FormTextarea } from "@/components/elements/form-elements/form-tags";
+import { FormInput, FormSelect, FormTextarea } from "@/components/elements/form-elements/form-tags";
 import { ProductFormSchema, ProductFormValues } from "./product-form-validations";
 import { Switch } from "@/components/ui/switch";
 
@@ -16,6 +16,7 @@ const defaultValues: Partial<ProductFormValues> = {
   discountedPrice: 0,
   summary: "",
   stock: 0,
+  categories: [],
   isActive: true,
 };
 
@@ -32,6 +33,13 @@ export function ProductForm({ searchParams }: ProductFormProps) {
     defaultValues: defaultValues,
     mode: "onBlur",
   });
+  const demoCategories = [
+  { value: "electronics", label: "Electronics" },
+  { value: "fashion", label: "Fashion" },
+  { value: "books", label: "Books" },
+  { value: "home", label: "Home & Kitchen" },
+  { value: "sports", label: "Sports" },
+];
 
   const onSubmit: SubmitHandler<ProductFormValues> = async (data) => {
     console.log("Product form submitted:", data);
@@ -102,7 +110,7 @@ export function ProductForm({ searchParams }: ProductFormProps) {
                   {...field}
                   id="input-price"
                     onChange={field.onChange}
-                  type="text"
+                  type="number"
                   placeholder="0."
                   autoComplete="off"
                  
@@ -126,7 +134,7 @@ export function ProductForm({ searchParams }: ProductFormProps) {
                   {...field}
                   id="input-price"
                     onChange={field.onChange}
-                  type="text"
+                  type="number"
                   placeholder="0.00"
                   autoComplete="off"
                  
@@ -174,7 +182,7 @@ export function ProductForm({ searchParams }: ProductFormProps) {
                   {...field}
                   id="input-stock"
                     onChange={field.onChange}
-                  type="text"
+                  type="number"
                   placeholder="0."
                   autoComplete="off"
                  
@@ -184,6 +192,30 @@ export function ProductForm({ searchParams }: ProductFormProps) {
             </FormElement.Item>
           )}
         />
+        <FormElement.Field
+          name="categories"
+          render={({ field }) => (
+            <FormElement.Item required>
+              <FormElement.Label htmlFor="input-categories">
+                Categories
+              </FormElement.Label>
+              <FormElement.Control>
+                <FormSelect
+                  type="multi"
+                  showMultiSelectValues="inside"
+                  fetcher={() => Promise.resolve(demoCategories)}
+                  getOptionValue={(cat) => cat.value}
+                  getDisplayValue={(cat) => cat.label}
+                  renderOption={(cat) => cat.label}
+                  value={field.value || []}
+                  onChange={field.onChange}
+                  label="Categories"
+                  placeholder="Select categories"
+                />
+              </FormElement.Control>
+            </FormElement.Item>
+          )}
+        />       
         {/* Is Active */}
         <FormElement.Field
                         name={`isActive.product`}
